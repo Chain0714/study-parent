@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chain.study.dao.FunctionDao">
+
+	<select id="getFunctionByName" parameterType="String" resultType="com.chain.study.dmo.FunctionDmo">
+		SELECT ID id,FUNCTION_NAME functionName,FUNCTION_CONTENT functionContent,IN_KEY_NUM inputNum,IN_KEY_CONTENT inputKey,OUT_KEY_NUM outputNum,OUT_KEY_CONTENT outputKey FROM `function` where FUNCTION_NAME = #{name};
+	</select>
+
+	<select id="getAllFunction" resultType="com.chain.study.dmo.FunctionDmo">
+		SELECT ID id,FUNCTION_NAME functionName,FUNCTION_CONTENT functionContent,IN_KEY_NUM inputNum,IN_KEY_CONTENT inputKey,OUT_KEY_NUM outputNum,OUT_KEY_CONTENT outputKey FROM `function`;
+	</select>
+
+	<insert id="addFunction" parameterType="com.chain.study.dmo.FunctionDmo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `function` (FUNCTION_NAME,FUNCTION_CONTENT,IN_KEY_NUM,IN_KEY_CONTENT,OUT_KEY_NUM,OUT_KEY_CONTENT)
+		VALUES(#{functionName},#{functionContent},#{inputNum},#{inputKey},#{outputNum},#{outputKey});
+	</insert>
+
+	<delete id="delFunction" parameterType="String">
+		DELETE FROM `function` WHERE FUNCTION_NAME = #{name};
+	</delete>
+</mapper>

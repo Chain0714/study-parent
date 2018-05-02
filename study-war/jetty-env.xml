@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configure id='wac' class="org.mortbay.jetty.webapp.WebAppContext">
+    <New id="dataSource" class="org.mortbay.jetty.plus.naming.Resource">  
+        <Arg>java:jetty/study/test</Arg>
+        <Arg>
+            <New class="org.apache.commons.dbcp.BasicDataSource">
+                <Set name="driverClassName">com.mysql.jdbc.Driver</Set>
+                <Set name="url">jdbc:mysql://10.37.88.65:3306/test</Set>
+                <Set name="username">devadmin</Set>
+                <Set name="password">anmnhzH2b3</Set>
+            </New>
+        </Arg>
+    </New>
+</Configure>

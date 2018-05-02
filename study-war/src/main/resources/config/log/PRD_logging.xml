@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 谨慎使用格式化操作（Ctrl + Shift + F），这会影响logback的日志打印格式！！！ -->
+<!-- scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。 -->
+<!-- scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 -->
+<!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 控制台输出日志 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%date|%thread|%X{invokeNo}|%level|%logger{0}|%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 基础log目录 -->
+    <substitutionProperty name="log.path" value="/opt/logs/pcids" />
+
+    <!-- 所有Error log -->
+    <appender name="ErrorLoggerFileOut" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件输出日志 (文件大小策略进行文件输出，超过指定大小对文件备份) -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encode>UTF-8</encode>
+        <file>${log.path}/pcids-error.log</file>
+        <!-- 日志文件rolling策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/pcids-error.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- 日志输出格式 -->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date|%thread|%X{invokeNo}|%level|%logger{0}|%msg%n</pattern>
+        </layout>
+    </appender>
+
+
+
+    <!-- core模块 日志文件 -->
+    <appender name="SERVER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encode>UTF-8</encode>
+        <File>${log.path}/pcids-server.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/pcids-server.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date|%thread|%X{invokeNo}|%level|%logger{0}|%msg%n</pattern>
+        </layout>
+    </appender>
+
+    <!-- RSF 日志文件 -->
+    <appender name="RSF" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encode>UTF-8</encode>
+        <File>${log.path}/suning-rsf.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/suning-rsf.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date|%thread|%X{invokeNo}|%level|%logger{0}|%msg%n</pattern>
+        </layout>
+    </appender>
+
+
+
+    <!-- zookeeper warn日志文件 -->
+    <appender name="ZOOKEEPER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encode>UTF-8</encode>
+        <File>${log.path}/pcids-zookeeper.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/pcids-zookeeper.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date|%thread|%X{invokeNo}|%level|%logger{0}|%msg%n</pattern>
+        </layout>
+    </appender>
+
+    <!-- KAFKA日志文件 -->
+    <appender name="KAFKA" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encode>UTF-8</encode>
+        <File>${log.path}/pcids-kafka.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/pcids-kafka.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date|%thread|%X{invokeNo}|%level|%logger{0}|%msg%n</pattern>
+        </layout>
+    </appender>
+
+
+    <logger name="com.suning.pcids" additivity="true">
+        <level value="info" />
+        <appender-ref ref="SERVER" />
+    </logger>
+
+    <logger name="com.suning.rsf" additivity="false">
+        <level value="info" />
+        <appender-ref ref="RSF" />
+    </logger>
+
+    <logger name="rsf" additivity="false">
+        <level value="info" />
+        <appender-ref ref="RSF" />
+    </logger>
+
+
+    <logger name="org.springframework" additivity="false">
+        <level value="info" />
+        <appender-ref ref="SPRING" />
+    </logger>
+
+    <!-- Zookeeper Start -->
+    <logger name="org.apache.zookeeper" additivity="false">
+        <level value="info" />
+        <appender-ref ref="ZOOKEEPER" />
+    </logger>
+
+    <logger name="org.I0Itec.zkclient" additivity="false">
+        <level value="info" />
+        <appender-ref ref="ZOOKEEPER" />
+    </logger>
+    <!-- Zookeeper End -->
+
+    <logger name="kafka" additivity="false">
+        <level value="info" />
+        <appender-ref ref="KAFKA" />
+    </logger>
+
+    <root>
+        <level value="INFO" />
+        <appender-ref ref="ErrorLoggerFileOut" />
+    </root>
+</configuration>
